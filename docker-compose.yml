@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  app:
+    image: 'elephantbet-image:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/elephantbet
+      - SPRING_DATASOURCE_USERNAME=elephantbet
+      - SPRING_DATASOURCE_PASSWORD=elephantbet
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=elephantbet
+      - POSTGRES_PASSWORD=elephantbet

@@ -1,0 +1,46 @@
+package com.eburtis.CvTheque.controleur;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.eburtis.CvTheque.domain.Candidat;
+import com.eburtis.CvTheque.facade.OffreEmploiFacade;
+import com.eburtis.CvTheque.presentation.vo.ImportOffreEmploiVO;
+import com.eburtis.CvTheque.presentation.vo.OffreEmploiVO;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("api/offre-emploi")
+public class OffreEmploiControleur {
+	private final OffreEmploiFacade offreEmploiFacade;
+
+	public OffreEmploiControleur(OffreEmploiFacade offreEmploiFacade) {
+		this.offreEmploiFacade = offreEmploiFacade;
+	}
+
+	/**
+	 * Importe une offre d'emploi
+	 *
+	 * @param importOffreEmploiVO l'offre d'emploi à importer
+	 */
+	@PutMapping
+	public void importer(@RequestBody ImportOffreEmploiVO importOffreEmploiVO) {
+		offreEmploiFacade.importer(importOffreEmploiVO);
+	}
+
+	@GetMapping("/lister")
+	public List<OffreEmploiVO> listerOffres(@RequestParam(value = "reference", required = false) Optional<Candidat> candidat) {
+		return offreEmploiFacade.listerOffres(candidat);
+	}
+
+	@GetMapping()
+	public OffreEmploiVO rechercherOffre(@RequestParam(value = "reference") String reference) {
+		return offreEmploiFacade.rechercherOffre(reference);
+	}
+}

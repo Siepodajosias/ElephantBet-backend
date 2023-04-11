@@ -1,0 +1,2 @@
+ALTER TABLE fichier
+ALTER COLUMN nom_fichier TYPE VARCHAR(225);
